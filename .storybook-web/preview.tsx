@@ -1,6 +1,6 @@
-import React from 'react';
 import {Preview} from '@storybook/react';
-import {ThemeProvider as StyledComponentsThemeProvider} from 'styled-components';
+import {withThemeFromJSXProvider} from '@storybook/addon-themes';
+import {ThemeProvider as StyledComponentsThemeProvider} from 'styled-components/native';
 
 const preview: Preview = {
   parameters: {
@@ -13,11 +13,14 @@ const preview: Preview = {
     },
   },
   decorators: [
-    Story => (
-      <StyledComponentsThemeProvider theme={{name: 'light'}}>
-        <Story />
-      </StyledComponentsThemeProvider>
-    ),
+    withThemeFromJSXProvider({
+      themes: {
+        light: {name: 'light'},
+        dark: {name: 'dark'},
+      },
+      defaultTheme: 'light',
+      Provider: StyledComponentsThemeProvider,
+    }),
   ],
 };
 
